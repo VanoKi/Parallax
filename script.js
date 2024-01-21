@@ -37,5 +37,22 @@ window.onload = function () {
       coordXprocent = coordX / parallaxWidth * 100
       coordYprocent = coordY / parallaxHeight * 100
     })
+    let thereshouldSets = [];
+    for (let i = 0; i <= 1.0; i += 0.005) {
+      thereshouldSets.push(i)
+    }
+    const callback = function (entries, observer) {
+      const scrollTopProcent = window.pageYOffset / parallax.offsetHeight * 100;
+      setMouseParallaxStyle(scrollTopProcent)
+    }
+    const observer = new IntersectionObserver(callback, {
+      threshold: thereshouldSets
+    })
+    observer.observe(document.querySelector('.content'));
+    function setParallaxItems(scrollTopProcent) {
+      content.style.cssText = `transform: translate(0%, -${scrollTopProcent/9}%);`
+      mountains.parentElement.style.cssText = `transform: translate(0%, -${scrollTopProcent/6}%);`
+      human.parentElement.style.cssText = `transform: translate(0%, -${scrollTopProcent/3}%);`
+    }
   }
 }
